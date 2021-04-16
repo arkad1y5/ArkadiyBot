@@ -31,10 +31,10 @@ def reg_name(message): #функція яка зберігає імя корес
 	bot.send_message(message.from_user.id, "Сколька лет?")
 	bot.register_next_step_handler(message, reg_age)
 
-def reg_age(message):
+def reg_age(message): #функція яка зберігає год корестувача
 	global age
 	#age = message.text
-	while age == 0:						#перевірка на то чи користовач ввів число а не текст
+	while age == 0:			#перевірка на то чи користовач ввів число а не текст
 		try:
 			age = int(message.text)
 		except Exception:
@@ -48,11 +48,11 @@ def reg_age(message):
 	question = "Тебя зовут " + name + ". Тебе " + str(age) + " лет. Верно?"
 	bot.send_message(message.from_user.id, text = question, reply_markup = keyboard)
 
-@bot.callback_query_handler(func = lambda call: True)
+@bot.callback_query_handler(func = lambda call: True)		#кнопки до знайомства
 def callback_data(call):
-	if call.data == 'yes':
+	if call.data == 'yes':  #кнопка да
 		bot.send_message(call.message.chat.id, "Приятно познакомится! Тепер запишу ето в базу даних")
-	elif call.data == 'no':
+	elif call.data == 'no':		#кнопка не
 		bot.send_message(call.message.chat.id, "Попробуем еще")
 		bot.send_message(call.message.chat.id, "Давай знакомиться! \nКак тебя зовут?")
 		bot.register_next_step_handler(call.message, reg_name)
